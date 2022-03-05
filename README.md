@@ -13,8 +13,10 @@ The MPC and obstacle detection nodes have been developed here. The remaining sub
 
 The MPC formulation is strongly based on the foundation examples provided by Dr. Mehrez from the University of Waterloo in the series of workshops that can be found [here](https://www.youtube.com/watch?v=RrnkPrcpyEA&list=PLK8squHT_Uzej3UCUHjtOtm5X7pMFSgAL&ab_channel=MohamedW.Mehrez) and the Github page with sample code can be found [here](https://github.com/MMehrez/MPC-and-MHE-implementation-in-MATLAB-using-Casadi). Sample results from simulation and practical tests are displayed below:
 
-# **Add videos - gifs? Simulation and practical.**
+Simulation Demo:
 ![sim demo](images/SIM_DEMO.gif)
+
+Practical Demo:
 ![practical demo](images/PRACTICAL_DEMO.gif)
 A major limitation of the navigation algorithm is the large number of user-defined variables. These are explored below and can be edited in the respective files:
 - MPC (*nav_ws/src/mpc/src/mpc_double_shooting_obstacle_detection.py*)
@@ -26,11 +28,9 @@ A major limitation of the navigation algorithm is the large number of user-defin
   - ***MAX_SCAN_RANGE***: maximum LiDAR range values used to compute obstacle constraints.
   - ***SUBSAMPLE_DISTANCE***: subsampling distance for each scan. 
 ## Setup and Download
----
 The following instructions download the required packages and dependencies to replicate the dynamic MPC with obstacle avoidance examples.
 
 ### Install the Dependencies
----
 Ensure catkin tools are installed:
 ```bash
 sudo apt-get install python3-catkin-tools python3-osrf-pycommon
@@ -49,7 +49,6 @@ sudo apt get install ros-noetic-hector-slam
 ```
 
 ### Clone and Build the Package
----
 In your desired location, clone the workspace:
 ```bash
 git clone https://github.com/vb44/nav_ws.git
@@ -88,11 +87,9 @@ source ~/.bashrc
 ```
 
 ## Running the Demo
----
 If you wish to run the simulation and all nodes from a single computer, skip to the next section.
 
 ### Network Setup for Two Computers
----
 Due to the computational load of running the Gazebo simulator and the MPC optimisation solver, the simulator was run on a separate computer to the nav demo. This can be achieved by setting up a ROS network between two computers. Any of the computers can be selected as the host. I will have the simulation computer (computer 1) as my host.
 
 Determine the IP address of both computers using the command:
@@ -135,7 +132,6 @@ rostopic list
 Computer 2 should display the */rosout* and */rosargs* topics. If the output displays, *Unable to communicate with master!*, ensure all files are sourced and the steps outlined above have been followed.
 
 ### Run the Demo
----
 1. Set the goal position in the *nav_ws/src/mpc/src/mpc_double_shooting_obstacle_detection.py* and *nav_ws/src/plotter/src/plotter.py*.
 2. On the host computer (computer 1):
     
