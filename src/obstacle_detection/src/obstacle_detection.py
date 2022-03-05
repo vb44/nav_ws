@@ -1,18 +1,21 @@
 #!/usr/bin/env python
-import rospy
-from sensor_msgs.msg import LaserScan
-from gazebo_msgs.msg import ModelStates
-from custom_msgs.msg import Cluster
-from geometry_msgs.msg import Pose
 import math
 import numpy as np
 
-# robot position
+# ros imports
+import rospy
+from sensor_msgs.msg import LaserScan
+from custom_msgs.msg import Cluster
+from geometry_msgs.msg import Pose
+
+
+# initialise robot position
 POS_X = 0       # meters
 POS_Y = 0       # meters
 POS_THETA = 0   # radians
 
-MAX_RANGE = 1 # meters
+# obstacle detection parameters
+MAX_RANGE = 1 # maximum scan range to be used to detect obstacles in meters
 SUBSAMPLE_DISTANCE = 0.1 # meters
 
 # convert from Quaternion to Euler angles
@@ -35,8 +38,6 @@ def euler_from_quaternion(x, y, z, w):
 
 def callback(data):
     global pub
-    # rospy.loginfo("pos: %lf, %lf, %lf", POS_X, POS_Y, POS_THETA)
-    # rospy.loginfo("I heard a scan message")
     ###############################################################################
     # convert LiDAR scan from polar to cartesian coordinates
     ###############################################################################
@@ -73,13 +74,12 @@ def callback(data):
         if point_new:
             cluster_centers.append(round(point[0].item() + POS_X, 2))
             cluster_centers.append(round(point[1].item() + POS_Y, 2))
-
-    rospy.loginfo(cluster_centers)
     
     cluster = Cluster()
     cluster.cluster_centres = cluster_centers
     pub.publish(cluster)
 
+# update the robot state
 def ground_truth_callback(data):
     global POS_X, POS_Y, POS_THETA
     roll, pitch, yaw  = euler_from_quaternion(data.orientation.x, data.orientation.y, data.orientation.z, data.orientation.w)
@@ -87,12 +87,14 @@ def ground_truth_callback(data):
     POS_Y = data.position.y
     POS_THETA = yaw
 
+# initalise node and subscribe to robot state and scan messages
 def listener():
-    rospy.init_node('listener', anonymous=False)
+    rospy.init_node('obstacle_detection', anonymous=False)
     rospy.Subscriber("robot_pos", Pose, ground_truth_callback, queue_size=1)
     rospy.Subscriber("scan", LaserScan, callback, queue_size=1)
     rospy.spin()
 
+# setup publisher for obstacle position
 if __name__=='__main__':
     pub = rospy.Publisher('clusters', Cluster, queue_size=1)
     listener()

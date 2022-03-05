@@ -1,5 +1,5 @@
 <launch>
-        <!-- launch slam node-->
+        <!-- launch slam node from the turtlebot3 package-->
         <include file="$(find turtlebot3_slam)/launch/turtlebot3_slam.launch">
             <arg name="slam_methods" value="hector"/>
         </include>
@@ -12,5 +12,4 @@
 
         <!-- begin plotter node -->
         <node pkg="plotter" type="plotter.py" name="plotter"></node>
-
 </launch>

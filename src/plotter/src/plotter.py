@@ -1,19 +1,15 @@
 # !/usr/bin/env python
 
-import rospy
-
-# from gazebo_msgs.msg import ModelStates
-from geometry_msgs.msg import Pose
-from custom_msgs.msg import Cluster, Predict
-from sensor_msgs.msg import LaserScan
-
 import math
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-# for robot pose from Gazebo Simulation
-ROBOT_INDEX = 1
+# ros imports
+import rospy
+from geometry_msgs.msg import Pose
+from custom_msgs.msg import Cluster, Predict
+from sensor_msgs.msg import LaserScan
 
 # robot position index
 POS_X = 0 # meters
@@ -120,10 +116,12 @@ class Visualiser:
 
 rospy.init_node('mpc_plotter')
 vis = Visualiser()
-rospy.Subscriber("robot_pos", Pose, vis.update_data, queue_size=1)
-rospy.Subscriber("predict", Predict, vis.update_predict, queue_size=1)
-rospy.Subscriber('scan', LaserScan, vis.scan_callback, queue_size=1)
-rospy.Subscriber('clusters', Cluster, vis.cluster_callback, queue_size=1)
+
+# setup subscribers
+rospy.Subscriber("robot_pos", Pose, vis.update_data, queue_size=1)          # robot state
+rospy.Subscriber("predict", Predict, vis.update_predict, queue_size=1)      # mpc prediction states
+rospy.Subscriber('scan', LaserScan, vis.scan_callback, queue_size=1)        # LiDAR scan data
+rospy.Subscriber('clusters', Cluster, vis.cluster_callback, queue_size=1)   # detected obstacle position
 
 ani = FuncAnimation(vis.fig, vis.update_plot, init_func=vis.plot_init)
 plt.show(block=True)
