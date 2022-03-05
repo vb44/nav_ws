@@ -1,0 +1,16 @@
+<launch>
+        <!-- launch slam node-->
+        <include file="$(find turtlebot3_slam)/launch/turtlebot3_slam.launch">
+            <arg name="slam_methods" value="hector"/>
+        </include>
+
+        <!-- begin slam pose listener -->
+        <node pkg="slam" type="hector_pose_listener.py" name="hector_pose_listener"></node>
+
+        <!-- begin obstacle detection node -->
+        <node pkg="obstacle_detection" type="obstacle_detection.py" name="obstacle_detection"></node>
+
+        <!-- begin plotter node -->
+        <node pkg="plotter" type="plotter.py" name="plotter"></node>
+
+</launch>
