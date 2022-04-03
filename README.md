@@ -45,7 +45,7 @@ pip install casadi numpy
 ```
 Download the Hector SLAM package:
 ```bash
-sudo apt get install ros-noetic-hector-slam
+sudo apt install ros-noetic-hector-slam
 ```
 
 ### Clone and Build the Package
