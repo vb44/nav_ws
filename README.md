@@ -13,10 +13,10 @@ The MPC and obstacle detection nodes have been developed here. The remaining sub
 
 The MPC formulation is strongly based on the foundation examples provided by Dr. Mehrez from the University of Waterloo in the series of workshops that can be found [here](https://www.youtube.com/watch?v=RrnkPrcpyEA&list=PLK8squHT_Uzej3UCUHjtOtm5X7pMFSgAL&ab_channel=MohamedW.Mehrez) and the Github page with sample code can be found [here](https://github.com/MMehrez/MPC-and-MHE-implementation-in-MATLAB-using-Casadi). Sample results from simulation and practical tests are displayed below:
 
-Simulation Demo:
+Simulation demo:
 ![sim demo](images/SIM_DEMO.gif)
 
-Practical Demo:
+Practical demo:
 ![practical demo](images/PRACTICAL_DEMO.gif)
 A major limitation of the navigation algorithm is the large number of user-defined variables. These are explored below and can be edited in the respective files:
 - MPC (*nav_ws/src/mpc/src/mpc_double_shooting_obstacle_detection.py*)
@@ -28,7 +28,7 @@ A major limitation of the navigation algorithm is the large number of user-defin
   - ***MAX_SCAN_RANGE***: maximum LiDAR range values used to compute obstacle constraints.
   - ***SUBSAMPLE_DISTANCE***: subsampling distance for each scan. 
 ## Setup and Download
-The following instructions download the required packages and dependencies to replicate the dynamic MPC with obstacle avoidance examples.
+The following instructions download the required packages and dependencies to replicate the dynamic MPC with obstacle avoidance examples. For all simulation tests and controlling the physical Turtlebot, a laptop with [Ubuntu 20.04.4 LTS](https://releases.ubuntu.com/20.04/) (Focal Fossa) with ROS 1 [Noetic Ninjemys](http://wiki.ros.org/noetic) was used.
 
 ### Install the Dependencies
 Ensure catkin tools are installed:
